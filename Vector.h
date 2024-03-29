@@ -1,5 +1,3 @@
-// include stuff
-// declare class stuff - finish the deal
 #ifndef VECTOR_H
 #define VECTOR_H
 
@@ -8,22 +6,23 @@ using namespace std;
 
 class Vector {
 
-  friend istream &operator>>(istream &, Vector &);
+  friend istream &operator>>(istream &, Vector &object);
   friend ostream &operator<<(ostream &, const Vector &);
 
-private:
-  int x;
-  int y;
-
 public:
-  Vector(int x, int y);
-  Vector(const Vector &object);
+  int vectorCoordinates[6] = {};
 
-  Vector &operator=(const Vector &);
+  int getComponentX() const;
+  int getComponentY() const;
+  int getComponentZ() const;
+
+  double calculateLength() const;
+
+  Vector &operator=(const Vector &object);
 
   Vector &operator+(const Vector &object) const;
-  Vector &operator-(const Vector &object) const; // check this
-  Vector &operator*(const Vector &object) const; // check this
+  Vector &operator-(const Vector &object) const;
+  Vector &operator*(const Vector &object) const;
 
   bool operator>(const Vector &) const;
   bool operator<(const Vector &) const;
