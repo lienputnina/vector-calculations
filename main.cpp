@@ -28,67 +28,46 @@ int main() {
   int repeatExecution = 0;
 
   do {
-    Vector vector1;
     Vector vector2;
-    Vector vector3; // not initialized, so 0
 
-    cout << "Enter the coordinates of two vectors. Each will have 6 "
-            "coordinate "
-            "points."
-         << endl;
-
+    cout << "Creating the first vector:" << endl;
+    Vector vector1;
     cin >> vector1;
-    cout << endl;
-    cout << "Vector1 created." << vector1 << endl;
+    cout << vector1 << endl;
 
+    cout << "Creating the second vector:" << endl;
     cin >> vector2;
     cout << endl;
-    cout << "Vector2 created." << vector2 << endl;
+    cout << vector2 << endl;
 
-    cout << "Would you like to equalize the vectors? (1 for Yes, 0 "
-            "for No): "
-         << endl;
+    cout << "Vector1 + Vector2" << endl;
+    Vector vectorSum = vector1 + vector2;
+    cout << vectorSum << endl;
 
-    int shouldEqualizeVectors;
-    shouldEqualizeVectors = getIntInput();
-    if (shouldEqualizeVectors == 1) {
-      vector1 = vector2;
-      cout << "\nAfter equalizing the states of Vector1 and Vector2 are: "
-           << vector1 << "and " << vector2 << endl;
-    };
+    cout << "Vector1 - Vector2" << endl;
+    Vector vectorDifference = vector1 - vector2;
+    cout << vectorDifference << endl;
 
-    cout << "Adding the vectors." << endl;
-    vector3 = vector1 + vector2;
-    cout << "The result is a new vector." << vector3 << endl;
+    cout << "Vector1 * Vector2" << endl;
+    Vector vectorProduct = vector1 * vector2;
+    cout << vectorProduct << endl;
 
-    cout << "Subtracting the vectors." << endl;
-    vector3 = vector1 - vector2;
-    cout << "The result is a new vector." << vector3 << endl;
+    cout << "Vector1 < Vector2: " << (vector1 < vector2) << endl;
+    cout << "Vector1 > Vector2: " << (vector1 > vector2) << endl;
 
-    cout << "Multiplying the vectors." << endl;
-    vector3 = vector1 * vector2;
-    cout << "The result is a new vector" << vector3 << endl;
+    cout << "Vector1 <= Vector2: " << (vector1 <= vector2) << endl;
+    cout << "Vector1 >= Vector2: " << (vector1 >= vector2) << endl;
 
-    cout << "Comparing the vectors: " << endl;
-    if (vector1 > vector2) {
-      cout << "Vector1 > Vector2" << endl;
-    } else if (vector1 < vector2) {
-      cout << "Vector1 < Vector2" << endl;
-    };
+    cout << "Vector1 == Vector2: " << (vector1 == vector2) << endl;
+    cout << "Vector1 != Vector2: " << (vector1 != vector2) << endl;
+    cout << endl;
 
-    if (vector1 >= vector2) {
-      cout << "Vector 1 >= than Vector2" << endl;
-    } else if (vector1 <= vector2) {
-      cout << "Vector 1 <= Vector2" << endl;
-    };
+    cout << "Vector1 = Vector2" << endl;
+    vector1 = vector2;
+    cout << vector1;
+    cout << vector2;
 
-    if (vector1 == vector2) {
-      cout << "Vector1 == Vector2" << endl;
-    } else if (vector1 != vector2) {
-      cout << "Vector1 != Vector2" << endl;
-    };
-
-    cout << "Enter 1 to continue or 0 to quit: " << endl;
+    cout << "Enter 1 to start again or 0 to quit: " << endl;
     repeatExecution = getIntInput();
 
   } while (repeatExecution != 0);

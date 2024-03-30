@@ -62,7 +62,7 @@ istream &operator>>(istream &input, Vector &coordinate) {
 
     while (!(input >> coordinate.vectorCoordinates[i])) {
       if (input.fail()) {
-        cout << "Invalid input. Please, enter an integer\n";
+        cout << "Invalid input. Please, enter an integer coordinate" << endl;
         // Clear error flags
         input.clear();
         // Ignore the rest of the line
@@ -78,14 +78,14 @@ istream &operator>>(istream &input, Vector &coordinate) {
 };
 
 ostream &operator<<(ostream &output, const Vector &vector) {
-  output << " Vector's coordinates: (";
+  output << "coordinates: (";
   for (int i = 0; i < 6; i++) {
     output << vector.vectorCoordinates[i];
     if (i < 5) // To avoid printing a comma after the last coordinate
       output << ", ";
   }
   output << "). ";
-  output << "Vector's length: " << vector.getLength() << endl;
+  output << "length: " << vector.getLength() << endl;
   return output;
 }
 
