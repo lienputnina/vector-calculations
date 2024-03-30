@@ -1,32 +1,32 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef Vector_h
+#define Vector_h
 
 #include <iostream>
+#include <string>
+
 using namespace std;
 
 class Vector {
 
-  friend istream &operator>>(istream &, Vector &coordinate);
+  friend istream &operator>>(istream &, Vector &);
   friend ostream &operator<<(ostream &, const Vector &);
+
+private:
+  int *vectorCoordinates;
+  string getCoordinateName(int i) const;
 
 public:
   Vector();
-  Vector(const Vector &rightHandObject);
   ~Vector();
-
-  int *vectorCoordinates;
 
   int getComponentX() const;
   int getComponentY() const;
   int getComponentZ() const;
+  float getLength() const;
 
-  double calculateLength() const;
-
-  Vector &operator=(const Vector &rightHandObject);
-
-  Vector operator+(const Vector &rightHandObject) const;
-  Vector operator-(const Vector &rightHandObject) const;
-  Vector operator*(const Vector &rightHandObject) const;
+  Vector operator+(const Vector &) const;
+  Vector operator-(const Vector &) const;
+  Vector operator*(const Vector &) const;
 
   bool operator>(const Vector &) const;
   bool operator<(const Vector &) const;
@@ -36,6 +36,8 @@ public:
 
   bool operator==(const Vector &) const;
   bool operator!=(const Vector &) const;
+
+  void operator=(const Vector &);
 };
 
 #endif

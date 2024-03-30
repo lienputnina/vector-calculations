@@ -1,9 +1,8 @@
-// include stuff
-// implement methods
 #include "Vector.h"
 #include <cmath>
 #include <iostream>
 #include <limits>
+#include <string>
 
 Vector::Vector() {
   /*
@@ -13,43 +12,53 @@ Vector::Vector() {
   vectorCoordinates = new int[6]{};
 }
 
-Vector::Vector(const Vector &rightHandObject) {
-  vectorCoordinates = new int[6];
-  for (int i = 0; i < 6; i++) {
-    vectorCoordinates[i] = rightHandObject.vectorCoordinates[i];
-  }
-}
-
 Vector::~Vector() {
   // Deallocating the memory for the vectorCoordinates array
   delete[] vectorCoordinates;
 }
+
 int Vector::getComponentX() const {
-  int x = vectorCoordinates[3] - vectorCoordinates[0];
-  return x;
+  return vectorCoordinates[3] - vectorCoordinates[0];
 };
 
 int Vector::getComponentY() const {
-  int y = vectorCoordinates[4] - vectorCoordinates[1];
-  return y;
+  return vectorCoordinates[4] - vectorCoordinates[1];
 };
 
 int Vector::getComponentZ() const {
-  int z = vectorCoordinates[5] - vectorCoordinates[2];
-  return z;
+  return vectorCoordinates[5] - vectorCoordinates[2];
 };
 
-double Vector::calculateLength() const {
-  double vectorLength =
+float Vector::getLength() const {
+  float vectorLength =
       sqrt((pow(getComponentX(), 2)) + (pow(getComponentY(), 2)) +
            (pow(getComponentZ(), 2)));
   return vectorLength;
 };
 
+string Vector::getCoordinateName(int i) const {
+  switch (i) {
+  case 0:
+    return "x1";
+  case 1:
+    return "y1";
+  case 2:
+    return "z1";
+  case 3:
+    return "x2";
+  case 4:
+    return "y2";
+  case 5:
+    return "z2";
+  default:
+    return "";
+  }
+}
+
 istream &operator>>(istream &input, Vector &coordinate) {
   for (int i = 0; i < 6; i++) {
-    cout << "Please, enter coordinate " << i + 1
-         << " of the vector. Enter an integer followed by a space. " << endl;
+    cout << "Enter the " << coordinate.getCoordinateName(i)
+         << " coordinate:" << std::endl;
 
     while (!(input >> coordinate.vectorCoordinates[i])) {
       if (input.fail()) {
@@ -76,91 +85,84 @@ ostream &operator<<(ostream &output, const Vector &vector) {
       output << ", ";
   }
   output << "). ";
-  output << "Vector's length: " << vector.calculateLength() << endl;
+  output << "Vector's length: " << vector.getLength() << endl;
   return output;
 }
 
-// Assigning one vector to the other
-Vector &Vector::operator=(const Vector &rightHandVector) {
-  if (this != &rightHandVector) {
-    for (int i = 0; i < 6; i++) {
-      this->vectorCoordinates[i] = rightHandVector.vectorCoordinates[i];
-    }
-  }
-  return *this;
-};
-
-// Addition of two vectors
 Vector Vector::operator+(const Vector &rightHandVector) const {
 
-  Vector additionResult;
+  Vector resultingVector;
 
   for (int i = 0; i < 6; i++) {
-    additionResult.vectorCoordinates[i] =
+    resultingVector.vectorCoordinates[i] =
         this->vectorCoordinates[i] + rightHandVector.vectorCoordinates[i];
   }
 
-  return additionResult;
+  return resultingVector;
 };
 
-// Subtraction of two vectors
 Vector Vector::operator-(const Vector &rightHandVector) const {
-  Vector subtractionResult;
+  Vector resultingVector;
 
   for (int i = 0; i < 6; ++i) {
-    subtractionResult.vectorCoordinates[i] =
+    resultingVector.vectorCoordinates[i] =
         this->vectorCoordinates[i] - rightHandVector.vectorCoordinates[i];
   }
 
-  return subtractionResult;
+  return resultingVector;
 };
 
 Vector Vector::operator*(const Vector &rightHandVector) const {
-  /*
- Multiplying two vectors:
- 1. Getting 3 components using the 2nd order determinant formula
- 2. Returning the result - instance of Vector class - object
-  */
-  Vector multiplicationResult;
+  Vector resultingVector;
 
   int resultComponentX =
       (this->getComponentY() * rightHandVector.getComponentZ()) -
       (rightHandVector.getComponentY() * this->getComponentZ());
   int resultComponentY =
-      (this->getComponentX() * rightHandVector.getComponentZ()) -
-      (rightHandVector.getComponentX() * this->getComponentZ());
+      -((this->getComponentX() * rightHandVector.getComponentZ()) -
+        (rightHandVector.getComponentX() * this->getComponentZ()));
   int resultComponentZ =
       this->getComponentX() * rightHandVector.getComponentY() -
       (rightHandVector.getComponentX() * this->getComponentY());
 
-  multiplicationResult.vectorCoordinates[0] = 0;
-  multiplicationResult.vectorCoordinates[1] = 0;
-  multiplicationResult.vectorCoordinates[2] = 0;
-  multiplicationResult.vectorCoordinates[3] = resultComponentX;
-  multiplicationResult.vectorCoordinates[4] = resultComponentY;
-  multiplicationResult.vectorCoordinates[5] = resultComponentZ;
+  resultingVector.vectorCoordinates[0] = 0;
+  resultingVector.vectorCoordinates[1] = 0;
+  resultingVector.vectorCoordinates[2] = 0;
+  resultingVector.vectorCoordinates[3] = resultComponentX;
+  resultingVector.vectorCoordinates[4] = resultComponentY;
+  resultingVector.vectorCoordinates[5] = resultComponentZ;
 
-  return multiplicationResult;
+  return resultingVector;
 };
 
-// Comparison operators - comparing vector lengths
 bool Vector::operator>(const Vector &rightHandVector) const {
-  return this->calculateLength() > rightHandVector.calculateLength();
+  return this->getLength() > rightHandVector.getLength();
 };
+
 bool Vector::operator<(const Vector &rightHandVector) const {
-  return this->calculateLength() < rightHandVector.calculateLength();
+  return this->getLength() < rightHandVector.getLength();
 };
 
 bool Vector::operator>=(const Vector &rightHandVector) const {
-  return (this->calculateLength() >= rightHandVector.calculateLength());
+  return (this->getLength() >= rightHandVector.getLength());
 };
+
 bool Vector::operator<=(const Vector &rightHandVector) const {
-  return (this->calculateLength() <= rightHandVector.calculateLength());
+  return (this->getLength() <= rightHandVector.getLength());
 };
 
 bool Vector::operator==(const Vector &rightHandVector) const {
-  return this->calculateLength() == rightHandVector.calculateLength();
+  return this->getLength() == rightHandVector.getLength();
 };
+
 bool Vector::operator!=(const Vector &rightHandVector) const {
-  return (this->calculateLength() != rightHandVector.calculateLength());
+  return (this->getLength() != rightHandVector.getLength());
+};
+
+void Vector::operator=(const Vector &rightHandVector) {
+  if (this != &rightHandVector) {
+    for (int i = 0; i < 6; i++) {
+      this->vectorCoordinates[i] = rightHandVector.vectorCoordinates[i];
+    }
+  }
 };

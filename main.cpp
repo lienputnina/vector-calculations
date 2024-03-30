@@ -42,15 +42,16 @@ int main() {
     cout << "Vector1 created." << vector1 << endl;
 
     cin >> vector2;
+    cout << endl;
     cout << "Vector2 created." << vector2 << endl;
 
     cout << "Would you like to equalize the vectors? (1 for Yes, 0 "
             "for No): "
          << endl;
 
-    int equalizeVectors;
-    equalizeVectors = getIntInput();
-    if (equalizeVectors == 1) {
+    int shouldEqualizeVectors;
+    shouldEqualizeVectors = getIntInput();
+    if (shouldEqualizeVectors == 1) {
       vector1 = vector2;
       cout << "\nAfter equalizing the states of Vector1 and Vector2 are: "
            << vector1 << "and " << vector2 << endl;
@@ -65,7 +66,7 @@ int main() {
     cout << "The result is a new vector." << vector3 << endl;
 
     cout << "Multiplying the vectors." << endl;
-    vector3 = vector1 * vector2; // why no work?
+    vector3 = vector1 * vector2;
     cout << "The result is a new vector" << vector3 << endl;
 
     cout << "Comparing the vectors: " << endl;
