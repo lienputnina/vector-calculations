@@ -3,12 +3,26 @@
 #include "Vector.h"
 #include <cmath>
 #include <iostream>
+#include <limits>
 
 Vector::Vector() {
-  // new vectorCoordinates array;
+  /*
+  Allocating memory for the vectorCoordinates array by creating a new instance
+  of an array with 6 int elements that will be initialized to 0
+  */
+  vectorCoordinates = new int[6]{};
 }
+
+Vector::Vector(const Vector &rightHandObject) {
+  vectorCoordinates = new int[6];
+  for (int i = 0; i < 6; i++) {
+    vectorCoordinates[i] = rightHandObject.vectorCoordinates[i];
+  }
+}
+
 Vector::~Vector() {
-  // delete vectorCoordinates array;
+  // Deallocating the memory for the vectorCoordinates array
+  delete[] vectorCoordinates;
 }
 int Vector::getComponentX() const {
   int x = vectorCoordinates[3] - vectorCoordinates[0];
@@ -34,22 +48,35 @@ double Vector::calculateLength() const {
 
 istream &operator>>(istream &input, Vector &coordinate) {
   for (int i = 0; i < 6; i++) {
-    cout << "Please, enter the coordinate of the vector. Enter one integer"
-         << endl;
-    input >> coordinate.vectorCoordinates[i];
+    cout << "Please, enter coordinate " << i + 1
+         << " of the vector. Enter an integer followed by a space. " << endl;
+
+    while (!(input >> coordinate.vectorCoordinates[i])) {
+      if (input.fail()) {
+        cout << "Invalid input. Please, enter an integer\n";
+        // Clear error flags
+        input.clear();
+        // Ignore the rest of the line
+        input.ignore(numeric_limits<streamsize>::max(), '\n');
+        // Retry the input
+        continue;
+      }
+    }
+    input.ignore(numeric_limits<streamsize>::max(), '\n');
   }
 
   return input;
 };
 
 ostream &operator<<(ostream &output, const Vector &vector) {
-  output << "The vector with coordinates (";
+  output << " Vector's coordinates: (";
   for (int i = 0; i < 6; i++) {
     output << vector.vectorCoordinates[i];
     if (i < 5) // To avoid printing a comma after the last coordinate
       output << ", ";
   }
-  output << ") has length " << vector.calculateLength() << ".";
+  output << "). ";
+  output << "Vector's length: " << vector.calculateLength() << endl;
   return output;
 }
 

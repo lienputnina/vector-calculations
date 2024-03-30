@@ -11,9 +11,10 @@ class Vector {
 
 public:
   Vector();
+  Vector(const Vector &rightHandObject);
   ~Vector();
 
-  int vectorCoordinates[6] = {};
+  int *vectorCoordinates;
 
   int getComponentX() const;
   int getComponentY() const;
