@@ -6,36 +6,59 @@
 
 Vector::Vector() {
   /*
-  Allocating memory for the vectorCoordinates array by creating a new instance
-  of an array with 6 int elements that will be initialized to 0
-  */
+ Allocating memory for the vectorCoordinates array to hold two 3D points
+ (start and end points of the vector), each represented by three integers
+ (x, y, z). The array is initialized with six 0s to ensure a clean state,
+ representing a vector with no magnitude or direction as its default state.
+ */
   vectorCoordinates = new int[6]{};
 }
 
 Vector::~Vector() {
-  // Deallocating the memory for the vectorCoordinates array
+  /*
+   Deallocating the memory for the vectorCoordinates array to prevent memory
+   leaks.
+  */
   delete[] vectorCoordinates;
 }
 
 int Vector::getComponentX() const {
+  /*
+  Calculating the X component by subtracting the value of x1 from x2 (x2 - x1).
+  */
   return vectorCoordinates[3] - vectorCoordinates[0];
 };
 
 int Vector::getComponentY() const {
+  /*
+ Calculating the Y component by subtracting the value of y1 from y2 (y2 -
+ y1).
+ */
   return vectorCoordinates[4] - vectorCoordinates[1];
 };
 
 int Vector::getComponentZ() const {
+  /*
+ Calculating the Z component by subtracting the value of z1 from z2 (z2 - z1).
+ */
   return vectorCoordinates[5] - vectorCoordinates[2];
 };
 
 float Vector::getLength() const {
+  /*
+  Calculating the length (magnitude) of the vector using the Euclidean norm
+  formula - taking the square root of the sum of the squares of its components
+  (x, y, z).
+  */
   float vectorLength =
       sqrt((pow(getComponentX(), 2)) + (pow(getComponentY(), 2)) +
            (pow(getComponentZ(), 2)));
   return vectorLength;
 };
 
+/*
+Returning the name of each subsequent vector coordinate
+*/
 string Vector::getCoordinateName(int i) const {
   switch (i) {
   case 0:
@@ -57,11 +80,16 @@ string Vector::getCoordinateName(int i) const {
 
 istream &operator>>(istream &input, Vector &coordinate) {
   for (int i = 0; i < 6; i++) {
-    bool inputIsValid = false; // Flag to track if the input is valid
+
+    // Tracking the validity of the user input
+    bool inputIsValid = false;
 
     while (!inputIsValid) {
+
       cout << "Enter the " << coordinate.getCoordinateName(i)
            << " coordinate:" << std::endl;
+
+      // Attempting to parse the input
       input >> coordinate.vectorCoordinates[i];
       if (input.fail()) {
         cout << "Invalid input. Please, enter an integer coordinate" << endl;
@@ -69,11 +97,12 @@ istream &operator>>(istream &input, Vector &coordinate) {
         input.clear();
         // Ignore the rest of the line
         input.ignore(numeric_limits<streamsize>::max(), '\n');
-        // Retry the input
       } else {
+        // Setting the variable to true as the input is now valid
         inputIsValid = true;
       }
     }
+    // Making sure no characters are left behind in the newline stream
     input.ignore(numeric_limits<streamsize>::max(), '\n');
   }
 
@@ -92,22 +121,39 @@ ostream &operator<<(ostream &output, const Vector &vector) {
   return output;
 }
 
+// Overloading the + operator for adding two vectors
 Vector Vector::operator+(const Vector &rightHandVector) const {
 
+  // Initialize a new Vector object to store the result
   Vector resultingVector;
 
   for (int i = 0; i < 6; i++) {
+    /*
+    Loop through each coordinate, adding corresponding components of the two
+    vectors
+    */
     resultingVector.vectorCoordinates[i] =
         this->vectorCoordinates[i] + rightHandVector.vectorCoordinates[i];
   }
 
+  /*
+   The result is a new vector where each component is the sum of the
+   corresponding components of the operand vectors
+  */
   return resultingVector;
 };
 
+// Overloading the - operator for subtracting two vectors
 Vector Vector::operator-(const Vector &rightHandVector) const {
+
+  // Initialize a new Vector object to store the result
   Vector resultingVector;
 
   for (int i = 0; i < 6; ++i) {
+    /*
+     Loop through each coordinate, subtracting corresponding components of the
+     two vectors
+     */
     resultingVector.vectorCoordinates[i] =
         this->vectorCoordinates[i] - rightHandVector.vectorCoordinates[i];
   }
@@ -115,9 +161,19 @@ Vector Vector::operator-(const Vector &rightHandVector) const {
   return resultingVector;
 };
 
+// Overloading the * operator to compute the cross product of two vectors
 Vector Vector::operator*(const Vector &rightHandVector) const {
+
+  // Initialize a new Vector object to store the result
   Vector resultingVector;
 
+  /*
+  Multiplying the vectors by using the Cross Product formula (vektoriālais
+  reizinājums).
+  The cross product is calculated using the determinant method, which results in
+  a vector perpendicular to the two input vectors. Each component of the
+  resulting vector is calculated as follows:
+  */
   int resultComponentX =
       (this->getComponentY() * rightHandVector.getComponentZ()) -
       (rightHandVector.getComponentY() * this->getComponentZ());
@@ -128,6 +184,11 @@ Vector Vector::operator*(const Vector &rightHandVector) const {
       this->getComponentX() * rightHandVector.getComponentY() -
       (rightHandVector.getComponentX() * this->getComponentY());
 
+  /*
+  Since the cross product only makes sense for the components and not the
+  original coordinates, we set the first three coordinates (x1, y1, z1) to zero,
+  indicating the vector's position relative to the origin
+  */
   resultingVector.vectorCoordinates[0] = 0;
   resultingVector.vectorCoordinates[1] = 0;
   resultingVector.vectorCoordinates[2] = 0;
@@ -138,11 +199,14 @@ Vector Vector::operator*(const Vector &rightHandVector) const {
   return resultingVector;
 };
 
+// Comparing the magnitude (length) of one vector to another vector's magnitude.
 bool Vector::operator>(const Vector &rightHandVector) const {
+
   return this->getLength() > rightHandVector.getLength();
 };
 
 bool Vector::operator<(const Vector &rightHandVector) const {
+
   return this->getLength() < rightHandVector.getLength();
 };
 
@@ -163,9 +227,7 @@ bool Vector::operator!=(const Vector &rightHandVector) const {
 };
 
 void Vector::operator=(const Vector &rightHandVector) {
-  if (this != &rightHandVector) {
-    for (int i = 0; i < 6; i++) {
-      this->vectorCoordinates[i] = rightHandVector.vectorCoordinates[i];
-    }
+  for (int i = 0; i < 6; i++) {
+    this->vectorCoordinates[i] = rightHandVector.vectorCoordinates[i];
   }
 };

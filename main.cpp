@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/*
+Helper function that checks the user input for restarting the program or leaving
+it
+*/
 int getIntInput() {
   int inputNumber;
   bool continueLoop = true;
@@ -26,6 +30,11 @@ int getIntInput() {
 
 int main() {
   int repeatExecution = 0;
+
+  /*
+  Program can be repeated until an exit condition is reached and repeatExecution
+  becomes 1
+  */
 
   do {
     Vector vector2;
@@ -71,6 +80,8 @@ int main() {
     cout << "\n";
 
     cout << "Enter 1 to start again or 0 to quit: " << endl;
+
+    // Validating user input for restarting or stopping the program execution
     repeatExecution = getIntInput();
 
   } while (repeatExecution != 0);
