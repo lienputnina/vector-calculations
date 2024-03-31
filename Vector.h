@@ -9,11 +9,9 @@ using namespace std;
 class Vector {
 
   /*
-  Declaring friendly functions for input/output operators. This approach allows
-  the Vector class to be directly input from and output to streams like
-  'cin''and 'cout', which themselves are instances of 'istream' and 'ostream'
-  classes.
-  */
+   Declaring friendly functions for input/output operators.
+   This approach allows the Time class to use 'cin' and 'cout' streams
+   */
   friend istream &operator>>(istream &, Vector &);
   friend ostream &operator<<(ostream &, const Vector &);
 
@@ -42,8 +40,7 @@ public:
   int getComponentZ() const;
 
   /*
-  Helper function that calculates the length of the vector by utilizing the
-  component functions
+  Helper function that calculates the length of the vector
   */
   float getLength() const;
 

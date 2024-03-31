@@ -6,47 +6,49 @@
 
 Vector::Vector() {
   /*
- Allocating memory for the vectorCoordinates array to hold two 3D points
- (start and end points of the vector), each represented by three integers
- (x, y, z). The array is initialized with six 0s to ensure a clean state,
- representing a vector with no magnitude or direction as its default state.
+ Allocating memory for the vectorCoordinates array to hold two 3D point
+ coordinates (start and end points of the vector), each represented by three
+ integers (x, y, z).
+
+ The array is initialized with six 0s to ensure a clean
+ state, representing a vector with no magnitude or direction as its default
+ state.
  */
   vectorCoordinates = new int[6]{};
 }
 
 Vector::~Vector() {
   /*
-   Deallocating the memory for the vectorCoordinates array to prevent memory
-   leaks.
+   Deallocating the previously reserved memory for the vectorCoordinates array
+   to prevent a memory leak.
   */
   delete[] vectorCoordinates;
 }
 
 int Vector::getComponentX() const {
   /*
-  Calculating the X component by subtracting the value of x1 from x2 (x2 - x1).
+  Calculating the X component by subtracting the value of x1 from x2.
   */
   return vectorCoordinates[3] - vectorCoordinates[0];
 };
 
 int Vector::getComponentY() const {
   /*
- Calculating the Y component by subtracting the value of y1 from y2 (y2 -
- y1).
+ Calculating the Y component by subtracting the value of y1 from y2.
  */
   return vectorCoordinates[4] - vectorCoordinates[1];
 };
 
 int Vector::getComponentZ() const {
   /*
- Calculating the Z component by subtracting the value of z1 from z2 (z2 - z1).
+ Calculating the Z component by subtracting the value of z1 from z2.
  */
   return vectorCoordinates[5] - vectorCoordinates[2];
 };
 
 float Vector::getLength() const {
   /*
-  Calculating the length (magnitude) of the vector using the Euclidean norm
+  Calculating the length of the vector using the Euclidean norm
   formula - taking the square root of the sum of the squares of its components
   (x, y, z).
   */
@@ -81,10 +83,10 @@ string Vector::getCoordinateName(int i) const {
 istream &operator>>(istream &input, Vector &coordinate) {
   for (int i = 0; i < 6; i++) {
 
-    // Tracking the validity of the user input
-    bool inputIsValid = false;
+    // Used to track the validity of the user input
+    bool isInputValid = false;
 
-    while (!inputIsValid) {
+    while (!isInputValid) {
 
       cout << "Enter the " << coordinate.getCoordinateName(i)
            << " coordinate:" << std::endl;
@@ -97,9 +99,10 @@ istream &operator>>(istream &input, Vector &coordinate) {
         input.clear();
         // Ignore the rest of the line
         input.ignore(numeric_limits<streamsize>::max(), '\n');
-      } else {
-        // Setting the variable to true as the input is now valid
-        inputIsValid = true;
+      }
+      // If attempt was successful and input is valid
+      else {
+        isInputValid = true;
       }
     }
     // Making sure no characters are left behind in the newline stream
@@ -121,38 +124,44 @@ ostream &operator<<(ostream &output, const Vector &vector) {
   return output;
 }
 
-// Overloading the + operator for adding two vectors
+/*
+Overloading the + operator for adding two vectors mathematically that gives
+a result vector
+*/
 Vector Vector::operator+(const Vector &rightHandVector) const {
 
-  // Initialize a new Vector object to store the result
+  // Initializing a new Vector object to store the result
   Vector resultingVector;
 
   for (int i = 0; i < 6; i++) {
     /*
-    Loop through each coordinate, adding corresponding components of the two
-    vectors
+    Loop through each coordinate, adding the corresponding coordinates of the
+    two vectors
     */
     resultingVector.vectorCoordinates[i] =
         this->vectorCoordinates[i] + rightHandVector.vectorCoordinates[i];
   }
 
   /*
-   The result is a new vector where each component is the sum of the
-   corresponding components of the operand vectors
+   The result is a new vector where each coordinate is the sum of the
+   corresponding coordinates of the two operand vectors
   */
   return resultingVector;
 };
 
-// Overloading the - operator for subtracting two vectors
+/*
+Overloading the - operator for subtracting two vectors mathematically that gives
+a result vector
+*/
 Vector Vector::operator-(const Vector &rightHandVector) const {
 
-  // Initialize a new Vector object to store the result
+  // Initializing a new Vector object to store the result
   Vector resultingVector;
 
   for (int i = 0; i < 6; ++i) {
     /*
-     Loop through each coordinate, subtracting corresponding components of the
-     two vectors
+     Loop through each coordinate, subtracting the corresponding coordinates of
+     the two vectors
      */
     resultingVector.vectorCoordinates[i] =
         this->vectorCoordinates[i] - rightHandVector.vectorCoordinates[i];
@@ -164,7 +173,7 @@ Vector Vector::operator-(const Vector &rightHandVector) const {
 // Overloading the * operator to compute the cross product of two vectors
 Vector Vector::operator*(const Vector &rightHandVector) const {
 
-  // Initialize a new Vector object to store the result
+  // Initializing a new Vector object to store the result
   Vector resultingVector;
 
   /*
@@ -192,6 +201,8 @@ Vector Vector::operator*(const Vector &rightHandVector) const {
   resultingVector.vectorCoordinates[0] = 0;
   resultingVector.vectorCoordinates[1] = 0;
   resultingVector.vectorCoordinates[2] = 0;
+
+  // And set the vector end-point coordinates apart by the component lengths
   resultingVector.vectorCoordinates[3] = resultComponentX;
   resultingVector.vectorCoordinates[4] = resultComponentY;
   resultingVector.vectorCoordinates[5] = resultComponentZ;
@@ -199,7 +210,7 @@ Vector Vector::operator*(const Vector &rightHandVector) const {
   return resultingVector;
 };
 
-// Comparing the magnitude (length) of one vector to another vector's magnitude.
+// Comparing the length of both vectors.
 bool Vector::operator>(const Vector &rightHandVector) const {
 
   return this->getLength() > rightHandVector.getLength();

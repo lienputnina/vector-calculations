@@ -32,8 +32,7 @@ int main() {
   int repeatExecution = 0;
 
   /*
-  Program can be repeated until an exit condition is reached and repeatExecution
-  becomes 1
+  Program can be repeated until an exit condition is reached
   */
 
   do {
@@ -81,7 +80,7 @@ int main() {
 
     cout << "Enter 1 to start again or 0 to quit: " << endl;
 
-    // Validating user input for restarting or stopping the program execution
+    // Validating user input for breaking the loop
     repeatExecution = getIntInput();
 
   } while (repeatExecution != 0);
