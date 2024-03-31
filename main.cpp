@@ -40,32 +40,35 @@ int main() {
     cout << endl;
     cout << vector2 << endl;
 
-    cout << "Vector1 + Vector2" << endl;
+    cout << "Vector1 + Vector2:" << endl;
     Vector vectorSum = vector1 + vector2;
     cout << vectorSum << endl;
 
-    cout << "Vector1 - Vector2" << endl;
+    cout << "Vector1 - Vector2:" << endl;
     Vector vectorDifference = vector1 - vector2;
     cout << vectorDifference << endl;
 
-    cout << "Vector1 * Vector2" << endl;
+    cout << "Vector1 * Vector2:" << endl;
     Vector vectorProduct = vector1 * vector2;
     cout << vectorProduct << endl;
 
     cout << "Vector1 < Vector2: " << (vector1 < vector2) << endl;
     cout << "Vector1 > Vector2: " << (vector1 > vector2) << endl;
+    cout << "\n";
 
     cout << "Vector1 <= Vector2: " << (vector1 <= vector2) << endl;
     cout << "Vector1 >= Vector2: " << (vector1 >= vector2) << endl;
+    cout << "\n";
 
     cout << "Vector1 == Vector2: " << (vector1 == vector2) << endl;
     cout << "Vector1 != Vector2: " << (vector1 != vector2) << endl;
-    cout << endl;
+    cout << "\n";
 
     cout << "Vector1 = Vector2" << endl;
     vector1 = vector2;
     cout << vector1;
     cout << vector2;
+    cout << "\n";
 
     cout << "Enter 1 to start again or 0 to quit: " << endl;
     repeatExecution = getIntInput();

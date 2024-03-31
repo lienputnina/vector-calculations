@@ -81,14 +81,14 @@ istream &operator>>(istream &input, Vector &coordinate) {
 };
 
 ostream &operator<<(ostream &output, const Vector &vector) {
-  output << "coordinates: (";
+  output << "Coordinates: (";
   for (int i = 0; i < 6; i++) {
     output << vector.vectorCoordinates[i];
     if (i < 5) // To avoid printing a comma after the last coordinate
       output << ", ";
   }
   output << "). ";
-  output << "length: " << vector.getLength() << endl;
+  output << "Length: " << vector.getLength() << endl;
   return output;
 }
 
