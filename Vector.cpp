@@ -57,10 +57,12 @@ string Vector::getCoordinateName(int i) const {
 
 istream &operator>>(istream &input, Vector &coordinate) {
   for (int i = 0; i < 6; i++) {
-    cout << "Enter the " << coordinate.getCoordinateName(i)
-         << " coordinate:" << std::endl;
+    bool inputIsValid = false; // Flag to track if the input is valid
 
-    while (!(input >> coordinate.vectorCoordinates[i])) {
+    while (!inputIsValid) {
+      cout << "Enter the " << coordinate.getCoordinateName(i)
+           << " coordinate:" << std::endl;
+      input >> coordinate.vectorCoordinates[i];
       if (input.fail()) {
         cout << "Invalid input. Please, enter an integer coordinate" << endl;
         // Clear error flags
@@ -68,7 +70,8 @@ istream &operator>>(istream &input, Vector &coordinate) {
         // Ignore the rest of the line
         input.ignore(numeric_limits<streamsize>::max(), '\n');
         // Retry the input
-        continue;
+      } else {
+        inputIsValid = true;
       }
     }
     input.ignore(numeric_limits<streamsize>::max(), '\n');
