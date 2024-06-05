@@ -10,7 +10,7 @@ class Vector {
 
   /*
    Declaring friendly functions for input/output operators.
-   This approach allows the Time class to use 'cin' and 'cout' streams
+   This approach allows the Vector class to use 'cin' and 'cout' streams
    */
   friend istream &operator>>(istream &, Vector &);
   friend ostream &operator<<(ostream &, const Vector &);
